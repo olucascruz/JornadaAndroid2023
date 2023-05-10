@@ -1,7 +1,13 @@
 package com.example.jornadaandroid2023
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -41,8 +47,65 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val masp = LatLng(-23.56145468796075, -46.65589196747173)
+        mMap.addMarker(MarkerOptions().position(masp).title("MASP (São Paulo)"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(masp))
+
+
+        startLocationService()
+    }
+
+    private fun startLocationService() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Exibe uma mensagem solicitando a permissão da localização
+            Toast.makeText(this, "Permita a localização.", Toast.LENGTH_LONG).show()
+            requestLocationPermission()
+
+            // Encerra a execução da função, pois não temos permissão para ver a localização
+            return
+        }
+
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        val locationProvider = LocationManager.GPS_PROVIDER
+
+        val currentLocation = locationManager.getLastKnownLocation(locationProvider)
+        if(currentLocation == null){
+            Toast.makeText(this, "habilite a localização",Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val currentLocationLatLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+        mMap.addMarker(MarkerOptions().position(currentLocationLatLng).title("Você esta aqui"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocationLatLng))
+    }
+
+    private fun requestLocationPermission(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf (Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+            , 1)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == 1 &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED ||
+            grantResults[1] == PackageManager.PERMISSION_GRANTED){
+
+            startLocationService()
+        }
     }
 }
