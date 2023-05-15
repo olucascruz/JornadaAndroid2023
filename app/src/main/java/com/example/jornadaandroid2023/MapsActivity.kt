@@ -22,6 +22,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
 
+    val apiRepository = ApiRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +54,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         startLocationService()
+
+        apiRepository.listHints(object : ApiRepository.HintCallback){
+            override fun onResult(hints: List<Hint>){
+
+            }
+
+        }
     }
 
     private fun startLocationService() {
@@ -77,14 +85,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val locationProvider = LocationManager.GPS_PROVIDER
 
         val currentLocation = locationManager.getLastKnownLocation(locationProvider)
+
         if(currentLocation == null){
             Toast.makeText(this, "habilite a localização",Toast.LENGTH_LONG).show()
             return
         }
 
         val currentLocationLatLng = LatLng(currentLocation.latitude, currentLocation.longitude)
+        val zoomLevel = 25.0f
+        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLocationLatLng, zoomLevel)
+        mMap.animateCamera(cameraUpdate)
         mMap.addMarker(MarkerOptions().position(currentLocationLatLng).title("Você esta aqui"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocationLatLng))
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocationLatLng))
     }
 
     private fun requestLocationPermission(){
