@@ -5,7 +5,7 @@ data class HintsApiResult(
 )
 
 data class HintsRecord(
-    val id: Int,
+    val id: String,
     val fields: Hint
 )
 

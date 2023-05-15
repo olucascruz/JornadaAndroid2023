@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -55,13 +56,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         startLocationService()
 
-        apiRepository.listHints(object : ApiRepository.HintCallback){
-            override fun onResult(hints: List<Hint>){
 
+        apiRepository.listHints(object : HintCallback {
+            override fun onResult(hints: List<Hint>) {
+                hints.forEach { hint ->
+                    val marker = LatLng(hint.latitude, hint.longitude)
+                    mMap.addMarker(
+                        MarkerOptions()
+                            .position(marker)
+                            .title("Dica ${hint.id}: ${hint.name}")
+                    )
+                }
             }
+        })
 
-        }
     }
+
 
     private fun startLocationService() {
         if (ActivityCompat.checkSelfPermission(

@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiRepository {
 
-    private const val API_KEY = "${BuildConfig.HINTS_API_KEY}"
+    private const val API_KEY = "patjuAoOFil6id2zw.c6383a281a1108a09e49c579b4065732e46b887881b6e9fda7e1657ea61b6b4d"
 
     private val httpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
@@ -26,7 +26,7 @@ object ApiRepository {
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.airtable.com/v0/appouUwOyyKLH6Eyz")
+            .baseUrl("https://api.airtable.com/v0/appouUwOyyKLH6Eyz/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(httpClient)
             .build()
@@ -40,7 +40,7 @@ object ApiRepository {
         call.enqueue(object: Callback<HintsApiResult>{
             override fun onResponse(call: Call<HintsApiResult>, response: Response<HintsApiResult>)
             {
-                Log.d("result", "Funcionou")
+                Log.d("API_REPOSITORY", "Resposta recebida com sucesso!")
                 val body: HintsApiResult? = response.body()
                 if(response.isSuccessful && body != null){
                     val records = body.records
@@ -50,15 +50,15 @@ object ApiRepository {
             }
 
             override fun onFailure(call: Call<HintsApiResult>, t: Throwable) {
-                Log.e("result", "Não funcionou", t)
+                Log.e("API_REPOSITORY", "Resposta falhou!", t)
 
             }
 
         })
     }
 
-    interface HintCallback {
-        fun onResult(hints: List<Hint>)
-    }
+}
 
+interface HintCallback {
+    fun onResult(hints: List<Hint>)
 }
