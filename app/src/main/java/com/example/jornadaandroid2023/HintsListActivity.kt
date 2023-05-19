@@ -15,10 +15,10 @@ class HintsListActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         rvHints.layoutManager = layoutManager
 
-        val hintList = listOf(
-            Hint(1,"Local da dica", 10.0, 10.10) ,
-            Hint(1,"Local da dica", 10.0, 10.10),
-            Hint(1,"Local da dica", 10.0, 10.10)
+        val hintsList = listOf(
+            Hint(1,"Local da dica", 10.2, 10.10) ,
+            Hint(2,"Local da dica", 15.0, 10.30),
+            Hint(3,"Local da dica", 14.0, 10.20)
         )
 
         val adapter = HintsListAdapter(hintsList)
