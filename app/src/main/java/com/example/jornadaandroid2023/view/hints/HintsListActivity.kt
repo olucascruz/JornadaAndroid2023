@@ -1,11 +1,13 @@
-package com.example.jornadaandroid2023
+package com.example.jornadaandroid2023.view.hints
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jornadaandroid2023.database.AppDatabase
-import com.example.jornadaandroid2023.database.HintEntity
+import com.example.jornadaandroid2023.model.source.remote.entities.Hint
+import com.example.jornadaandroid2023.R
+import com.example.jornadaandroid2023.model.source.local.AppDatabase
+import com.example.jornadaandroid2023.model.source.local.hint.HintEntity
 
 class HintsListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,5 +53,5 @@ class HintsListActivity : AppCompatActivity() {
         }.start()
 
         }
-    
+
 }

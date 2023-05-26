@@ -1,10 +1,12 @@
-package com.example.jornadaandroid2023
+package com.example.jornadaandroid2023.view.hints
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jornadaandroid2023.model.source.remote.entities.Hint
+import com.example.jornadaandroid2023.R
 
 class HintsListAdapter(private val items: List<Hint>) : RecyclerView.Adapter<HintsListAdapter.ViewHolder>() {
 

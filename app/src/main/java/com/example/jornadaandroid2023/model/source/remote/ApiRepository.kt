@@ -1,6 +1,8 @@
-package com.example.jornadaandroid2023
+package com.example.jornadaandroid2023.model.source.remote
 
 import android.util.Log
+import com.example.jornadaandroid2023.model.source.remote.entities.HintsApiResult
+import com.example.jornadaandroid2023.model.source.remote.service.HintsService
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,6 +61,3 @@ object ApiRepository {
 
 }
 
-interface HintCallback {
-    fun onResult(hints: List<Hint>)
-}

@@ -1,7 +1,7 @@
-package com.example.jornadaandroid2023
+package com.example.jornadaandroid2023.view.push_notification
 
-import android.app.Service
 import android.util.Log
+import com.example.jornadaandroid2023.view.push_notification.PushNotificationManager
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 

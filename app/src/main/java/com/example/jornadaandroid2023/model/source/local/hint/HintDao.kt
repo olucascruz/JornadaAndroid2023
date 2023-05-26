@@ -1,4 +1,4 @@
-package com.example.jornadaandroid2023.database
+package com.example.jornadaandroid2023.model.source.local.hint
 
 import androidx.room.Dao
 import androidx.room.Insert
