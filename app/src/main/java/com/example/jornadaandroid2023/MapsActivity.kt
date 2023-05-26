@@ -50,9 +50,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val masp = LatLng(-23.56145468796075, -46.65589196747173)
-        mMap.addMarker(MarkerOptions().position(masp).title("MASP (São Paulo)"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(masp))
+        val startPoint = LatLng(-23.56145468796075, -46.65589196747173)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint, 13f))
 
 
         startLocationService()
@@ -60,6 +59,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         apiRepository.listHints(object : HintCallback {
             override fun onResult(hints: List<Hint>) {
+
+
                 hints.forEach { hint ->
                     val marker = LatLng(hint.latitude, hint.longitude)
                     mMap.addMarker(

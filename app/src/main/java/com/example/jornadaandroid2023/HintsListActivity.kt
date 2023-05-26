@@ -22,10 +22,10 @@ class HintsListActivity : AppCompatActivity() {
         val hintDao = appDatabase.hintDao()
 
         Thread {
-            hintDao.insert(hintEntity1)
-            hintDao.insert(hintEntity2)
-            hintDao.insert(hintEntity3)
-            hintDao.insert(hintEntity4)
+            //hintDao.insert(hintEntity1)
+            //hintDao.insert(hintEntity2)
+            //hintDao.insert(hintEntity3)
+            //hintDao.insert(hintEntity4)
 
             val hintsEntities = hintDao.findAll()
 
@@ -51,6 +51,5 @@ class HintsListActivity : AppCompatActivity() {
         }.start()
 
         }
-
-
+    
 }
