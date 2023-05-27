@@ -1,6 +1,6 @@
 package com.example.jornadaandroid2023.model.source.remote.entities
 
-data class Hint(
+data class HintApiModel(
     val id: Int,
     val name: String,
     val latitude: Double,

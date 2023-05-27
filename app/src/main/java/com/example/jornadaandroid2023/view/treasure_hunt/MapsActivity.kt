@@ -10,8 +10,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
-import com.example.jornadaandroid2023.model.source.remote.ApiRepository
-import com.example.jornadaandroid2023.model.source.remote.entities.Hint
+import com.example.jornadaandroid2023.model.source.remote.HintsRemoteDataSource
+import com.example.jornadaandroid2023.model.source.remote.entities.HintApiModel
 import com.example.jornadaandroid2023.model.source.remote.HintCallback
 import com.example.jornadaandroid2023.view.hints.HintsListActivity
 import com.example.jornadaandroid2023.R
@@ -30,14 +30,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
 
-    val apiRepository = ApiRepository
+    val apiRepository = HintsRemoteDataSource
     private lateinit var hintsViewModel: HintsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        hintsViewModel = ViewModelProvider(this).get(HintsViewModel::class.java)
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        hintsViewModel = ViewModelProvider(this).get(HintsViewModel::class.java)
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -64,23 +66,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         startLocationService()
 
-
-        ApiRepository.listHints(object : HintCallback {
-            override fun onResult(hints: List<Hint>) {
-
-
-                hints.forEach { hint ->
-                    val marker = LatLng(hint.latitude, hint.longitude)
-                    mMap.addMarker(
-                        MarkerOptions()
-                            .position(marker)
-                            .title("Dica ${hint.id}: ${hint.name}")
-                    )
-                }
+        hintsViewModel.hints.observe(this) { hints ->
+            hints.forEach{hint ->
+                val marker = LatLng(hint.latitude, hint.longitude)
+                mMap.addMarker(
+                    MarkerOptions()
+                        .position(marker)
+                        .title("Dica ${hint.id}: ${hint.name}")
+                )
             }
-        })
-
+        }
     }
+
 
 
     private fun startLocationService() {

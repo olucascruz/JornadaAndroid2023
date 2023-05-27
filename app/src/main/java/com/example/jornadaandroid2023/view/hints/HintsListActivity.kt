@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jornadaandroid2023.model.source.remote.entities.Hint
+import com.example.jornadaandroid2023.model.source.remote.entities.HintApiModel
 import com.example.jornadaandroid2023.R
 import com.example.jornadaandroid2023.model.source.local.AppDatabase
 import com.example.jornadaandroid2023.model.source.local.hint.HintEntity
@@ -44,7 +44,7 @@ class HintsListActivity : AppCompatActivity() {
                 //)
 
                 val hintsList = hintsEntities.map {
-                    Hint(it.id, it.name, it.latitude, it.longitude)
+                    HintApiModel(it.id, it.name, it.latitude, it.longitude)
                 }
 
                 val adapter = HintsListAdapter(hintsList)
